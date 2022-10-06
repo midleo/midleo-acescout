@@ -16,17 +16,18 @@ import * as CryptoJS from 'crypto-js';
   styleUrls: ['./components/qmdialog/qmdialog-dialog.css']
 })
 export class DialogContentQMDialogComponent implements OnInit {
-  qmForm: FormGroup;
+  aceForm: FormGroup;
   objectKeys = Object.keys;
 
   constructor(private _dialog: MatDialog, public dataServ: DataService, private snackBar: MatSnackBar, private formBuilder: FormBuilder) { }
   ngOnInit() {
-    this.qmForm = new FormGroup({
+    this.aceForm = new FormGroup({
      group: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(60)]),
-     name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(60)]),
      hostname: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(60)]),
      port: new FormControl('', [Validators.required]),
-     channel: new FormControl('', [Validators.required]),
+     auth: new FormControl(''),
+     usrname: new FormControl(''),
+     usrpass: new FormControl(''),
      ssl: new FormControl(''),
      sslkey: new FormControl(''),
      sslpass: new FormControl(''),
@@ -34,53 +35,51 @@ export class DialogContentQMDialogComponent implements OnInit {
     }, { updateOn: 'blur' });
   }
   public hasError = (controlName: string, errorName: string) => {
-    return this.qmForm.controls[controlName].hasError(errorName);
+    return this.aceForm.controls[controlName].hasError(errorName);
   }
   createQM() {
-    if (this.qmForm.valid) {
+    if (this.aceForm.valid) {
     const qmgrinfo = {
-      name: this.qmForm.value.name.toUpperCase( ),
       iconName: 'more_vert',
-      hostname: this.qmForm.value.hostname,
-      port: this.qmForm.value.port,
-      channel: this.qmForm.value.channel,
-      ssl: this.qmForm.value.ssl,
-      sslkey: this.qmForm.value.sslkey !== '' ? (window.btoa(this.qmForm.value.sslkey)).replace(new RegExp( '=', 'g'), '') : '',
-      sslpass: this.qmForm.value.sslpass,
-      sslcipher: this.qmForm.value.sslcipher,
+      name: this.aceForm.value.hostname.toUpperCase( ),
+      hostname: this.aceForm.value.hostname,
+      port: this.aceForm.value.port,
+      auth: this.aceForm.value.auth,
+      usrname: this.aceForm.value.usrname,
+      usrpass: this.aceForm.value.usrpass !== '' ? (window.btoa(this.aceForm.value.usrpass)).replace(new RegExp( '=', 'g'), '') : '',
+      ssl: this.aceForm.value.ssl,
+      sslkey: this.aceForm.value.sslkey !== '' ? (window.btoa(this.aceForm.value.sslkey)).replace(new RegExp( '=', 'g'), '') : '',
+      sslpass: this.aceForm.value.sslpass,
+      sslcipher: this.aceForm.value.sslcipher,
       children: [
-        { name: 'Qmanager',            iconName: 'devices_other', route: 'showQmgr'    },
-        { name: 'Queues',              iconName: 'devices_other', route: 'showQueues'  },
-        { name: 'Channels',            iconName: 'devices_other', route: 'showChannels'},
-        { name: 'Authority records',   iconName: 'lock',          route: 'showAuthR'   },
-        { name: 'Topics',              iconName: 'devices_other', route: 'showTopics'  },
-        { name: 'Subscriptions',       iconName: 'devices_other', route: 'showSubs'    },
-        { name: 'Delete',              iconName: 'close',         route: 'deleteQM'    }
+        { name: 'Server Info', iconName: 'devices_other', route: 'showServer'    },
+        { name: 'INT Server',  iconName: 'devices_other', route: 'showINTServer'  },
+        { name: 'Delete',      iconName: 'close',         route: 'deleteACE'    }
       ]
      };
-    if (this.dataServ.arrQMGR && this.dataServ.arrQMGR.some(e => e.name === this.qmForm.value.group.toUpperCase( ))) {
-      this.dataServ.arrQMGR.find(e => e.name === this.qmForm.value.group.toUpperCase( )).children.push(qmgrinfo);
+    if (this.dataServ.arrACE && this.dataServ.arrACE.some(e => e.name === this.aceForm.value.group.toUpperCase( ))) {
+      this.dataServ.arrACE.find(e => e.name === this.aceForm.value.group.toUpperCase( )).children.push(qmgrinfo);
     } else {
-      if (Array.isArray(this.dataServ.arrQMGR)) {
-        this.dataServ.arrQMGR.push({
-          name: this.qmForm.value.group.toUpperCase( ),
+      if (Array.isArray(this.dataServ.arrACE)) {
+        this.dataServ.arrACE.push({
+          name: this.aceForm.value.group.toUpperCase( ),
           iconName: 'apps',
           children: [qmgrinfo]
          });
       } else {
-        this.dataServ.arrQMGR = [{
-          name: this.qmForm.value.group.toUpperCase( ),
+        this.dataServ.arrACE = [{
+          name: this.aceForm.value.group.toUpperCase( ),
           iconName: 'apps',
           children: [qmgrinfo]
         }];
       }
       
     }
-    const qmreply = window.electronIpcSendSync('updateQM', JSON.stringify(this.dataServ.arrQMGR));
-    this.snackBar.open(qmreply, '', {
+    const acereply = window.electronIpcSendSync('updateQM', JSON.stringify(this.dataServ.arrACE));
+    this.snackBar.open(acereply, '', {
       duration: 3000,
     });
-    this.qmForm.reset();
+    this.aceForm.reset();
     this._dialog.closeAll();
     }
   }
@@ -95,7 +94,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('appDrawer', { static: false }) appDrawer: ElementRef;
   title = 'MidLEO';
   mobileQuery: MediaQueryList;
-  qmForm: FormGroup;
+  aceForm: FormGroup;
   objectKeys = Object.keys;
 
   encryptSecretKey  = 'VMIDteam';
@@ -128,7 +127,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     window.electronIpcOnce('readQMListData', (event, arg) => {
       const data = JSON.parse(arg);
-      this.dataServ.arrQMGR = data;
+      this.dataServ.arrACE = data;
     });
     window.electronIpcSend('readQMList');
   }

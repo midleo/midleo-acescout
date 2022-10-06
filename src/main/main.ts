@@ -9,7 +9,7 @@ const _APPHOME_ = `${_HOME_}${_SEP_}.midleo${_SEP_}`;
 remoteMain.initialize();
 
 if (!fs.existsSync(_APPHOME_)) fs.mkdirSync(_APPHOME_);
-if (!fs.existsSync(_APPHOME_ + 'qmgrlist.json')) fs.writeFileSync(_APPHOME_ + 'qmgrlist.json',"[{}]");
+if (!fs.existsSync(_APPHOME_ + 'acelist.json')) fs.writeFileSync(_APPHOME_ + 'acelist.json',"[{}]");
 
 let win: BrowserWindow;
 
@@ -48,12 +48,12 @@ function createWindow() {
 }
 
 ipcMain.on('updateQM', (event, arg) => {
-  fs.writeFileSync(_APPHOME_ + 'qmgrlist.json', arg.toString());
+  fs.writeFileSync(_APPHOME_ + 'acelist.json', arg.toString());
   event.returnValue = 'Qmanagers updated successfully';
 });
 
 ipcMain.on('readQMList', () => {
-  const rawdata = fs.readFileSync(_APPHOME_ + 'qmgrlist.json').toString();
+  const rawdata = fs.readFileSync(_APPHOME_ + 'acelist.json').toString();
   if (win) {
     win.webContents.send('readQMListData', rawdata);
   }

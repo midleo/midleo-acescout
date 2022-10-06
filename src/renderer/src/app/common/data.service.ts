@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class DataService {
 
-  selectedQmgr: any;
-  selectedQmgrInfo: any;
-  arrQMGR: any [] ;
-  arrQMGRtemp: any ;
+  selectedACE: any;
+  selectedACEInfo: any;
+  arrACE: any [] ;
+  arrACEtemp: any ;
 
   loadthis = false;
   dataerr = false;
-  qmgrdata: any [];
+  acedata: any [];
 
   qlist: any [];
   qlistreply: [];

@@ -55,7 +55,7 @@ export class QListComponent implements OnInit, OnDestroy {
   }
   getQL() {
 
-  this.dataServ.selectedQmgr = this.dataServ.arrQMGRtemp.name;
+  this.dataServ.selectedACE = this.dataServ.arrACEtemp.name;
 //  this.dataServ.systemobj = thissysobj;
 //  this.dataServ.emptyobj = thisemptyobj;
 
@@ -65,30 +65,30 @@ export class QListComponent implements OnInit, OnDestroy {
     this.dataServ.qlistreply = [];
   //  this.dataServ.systemobj = thissysobj;
   //  this.dataServ.emptyobj = thisemptyobj;
-    const QMGRinput = {
+    const ACEinput = {
       type: 'READ',
-      hostname: this.dataServ.arrQMGRtemp.hostname,
-      channel: this.dataServ.arrQMGRtemp.channel,
-      port: this.dataServ.arrQMGRtemp.port,
-      qmanager: this.dataServ.arrQMGRtemp.name,
+      hostname: this.dataServ.arrACEtemp.hostname,
+      channel: this.dataServ.arrACEtemp.channel,
+      port: this.dataServ.arrACEtemp.port,
+      qmanager: this.dataServ.arrACEtemp.name,
       function: 'QUEUES',
       systemobj: this.dataServ.systemobj,
-      ssl: this.dataServ.arrQMGRtemp.ssl,
-      sslkey: this.dataServ.arrQMGRtemp.sslkey,
-      sslpass: this.dataServ.arrQMGRtemp.sslpass,
-      sslcipher: this.dataServ.arrQMGRtemp.sslcipher
+      ssl: this.dataServ.arrACEtemp.ssl,
+      sslkey: this.dataServ.arrACEtemp.sslkey,
+      sslpass: this.dataServ.arrACEtemp.sslpass,
+      sslcipher: this.dataServ.arrACEtemp.sslcipher
     };
-    let qmreply: any;
+    let acereply: any;
     try {
-      qmreply = JSON.parse(window.electronIpcSendSync('execPCFQD', JSON.stringify(QMGRinput)));
+      acereply = JSON.parse(window.electronIpcSendSync('execPCFQD', JSON.stringify(ACEinput)));
       this.dataServ.dataerr = false;
     } catch (e) {
-      qmreply = '';
+      acereply = '';
       this.dataServ.dataerr = true;
     }
-    if (qmreply.queues) {
-    this.dataServ.qlistreply = qmreply.queues;
-    for ( const [key, value] of Object.entries( qmreply.queues ) ) {
+    if (acereply.queues) {
+    this.dataServ.qlistreply = acereply.queues;
+    for ( const [key, value] of Object.entries( acereply.queues ) ) {
       this.dataServ.qlist.push({
          objkey: key,
          name: value['QUEUE'],
@@ -123,7 +123,7 @@ export class QListComponent implements OnInit, OnDestroy {
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataServ.qlist);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'QUEUELIST');
-    XLSX.writeFile(wb, this.dataServ.arrQMGRtemp.name + '_queues.xlsx');
+    XLSX.writeFile(wb, this.dataServ.arrACEtemp.name + '_queues.xlsx');
   }
   ngOnDestroy() {
     if (this.navigationSubscription) {

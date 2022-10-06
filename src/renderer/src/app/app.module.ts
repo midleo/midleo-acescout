@@ -11,12 +11,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent, DialogContentQMDialogComponent} from './app.component';
 import { MainContentComponent } from './components/main/main.component';
-import { QMGRInfoComponent } from './components/qmgrinfo/qmgrinfo.component';
+import { ACEServerComponent } from './components/serverinfo/serverinfo.component';
 import { QListComponent, DialogDataQIDialogComponent } from './components/queuelist/queuelist.component';
-import { CHListComponent } from './components/chlist/chlist.component';
-import { AuthListComponent } from './components/authlist/authlist.component';
-import { TopicListComponent } from './components/topiclist/topiclist.component';
-import { SubListComponent } from './components/sublist/sublist.component';
 import { MenuListItemComponent } from './components/menu-list-item/menu-list-item.component';
 import { NavService } from './components/menu-list-item/nav.service';
 import { DataService } from './common/data.service';
@@ -29,12 +25,8 @@ import { DataService } from './common/data.service';
     MenuListItemComponent,
     DialogContentQMDialogComponent,
     DialogDataQIDialogComponent,
-    QMGRInfoComponent,
-    QListComponent,
-    CHListComponent,
-    AuthListComponent,
-    TopicListComponent,
-    SubListComponent
+    ACEServerComponent,
+    QListComponent
   ],
   imports: [
     BrowserModule,

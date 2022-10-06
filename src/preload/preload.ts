@@ -1,6 +1,5 @@
 import { ipcRenderer } from 'electron';
 
-console.log('preload.js loaded');
 
 window.electronIpcSend = (channel: string, ...arg: any) => {
   ipcRenderer.send(channel, arg);

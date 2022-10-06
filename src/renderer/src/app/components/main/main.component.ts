@@ -11,8 +11,8 @@ export class MainContentComponent implements OnInit {
   constructor(public dataServ: DataService) { }
 
   ngOnInit() {
-  //  this.dataServ.selectedQmgr = '';
-  //  this.dataServ.selectedQmgrInfo = '';
+  //  this.dataServ.selectedACE = '';
+  //  this.dataServ.selectedACEInfo = '';
 
   }
 }

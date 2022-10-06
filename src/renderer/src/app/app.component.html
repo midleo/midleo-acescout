@@ -3,12 +3,12 @@
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
     <h1 class="app-name">
       <a href="https://midleo.com/?" target="_blank">
-        <img src="../assets/midleo-logo.png" alt="Midleo MQScout" style="height:25px;">
+        <img src="../assets/midleo-logo.png" alt="Midleo IIBScout" style="height:25px;">
       </a>
     </h1>
     <span class="fill-remaining-space"></span>
     <span>
-      <a mat-button (click)="openQMDialog()">Add new QM</a>&nbsp;&nbsp;
+      <a mat-button (click)="openQMDialog()">Add new ACE node</a>&nbsp;&nbsp;
     </span>
     <span>
      <a mat-icon-button title="Light theme" aria-label="Light theme" (click)="onSetTheme('midleo-light-theme')"><mat-icon>wb_sunny</mat-icon></a>
@@ -19,7 +19,7 @@
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
                  [fixedInViewport]="mobileQuery.matches" [opened]="true">
       <mat-nav-list [style.marginTop.px]="40">
-        <app-menu-list-item *ngFor="let item of dataServ.arrQMGR | keyvalue" [item]="item.value" [itemkey]="item.key"></app-menu-list-item>
+        <app-menu-list-item *ngFor="let item of dataServ.arrACE | keyvalue" [item]="item.value" [itemkey]="item.key"></app-menu-list-item>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

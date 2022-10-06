@@ -47,14 +47,14 @@ export class MenuListItemComponent implements OnInit {
     if (this.depth === 0) { this.dataServ.jsonkey = itemkey; this.dataServ.jsonkeychanged = true; }
     if (this.depth === 1) { this.dataServ.jsonsubkey = itemkey; this.dataServ.jsonkeychanged = true; }
     if (!item.children || !item.children.length) {
-      if (item.route === 'deleteQM') {
-        this.deleteQM();
+      if (item.route === 'deleteACE') {
+        this.deleteACE();
       } else {
       this.snackBar.open('Data is loading. Please wait', '', {
         duration: 5000,
       });
       this.dataServ.loadthis = true;
-      this.dataServ.arrQMGRtemp = previtem;
+      this.dataServ.arrACEtemp = previtem;
       this.router.navigate([item.route + '/:' + this.dataServ.jsonkey + this.dataServ.jsonsubkey]);
     }
      // this.navService.closeNav();
@@ -64,13 +64,13 @@ export class MenuListItemComponent implements OnInit {
     }
   }
 
-  deleteQM() {
-    this.dataServ.arrQMGR[this.dataServ.jsonkey].children.splice(this.dataServ.jsonsubkey, 1);
-    if (!this.dataServ.arrQMGR[this.dataServ.jsonkey].children.length) {
-      this.dataServ.arrQMGR.splice(this.dataServ.jsonkey, 1);
+  deleteACE() {
+    this.dataServ.arrACE[this.dataServ.jsonkey].children.splice(this.dataServ.jsonsubkey, 1);
+    if (!this.dataServ.arrACE[this.dataServ.jsonkey].children.length) {
+      this.dataServ.arrACE.splice(this.dataServ.jsonkey, 1);
     }
-    const qmreply = window.electronIpcSendSync('updateQM', JSON.stringify(this.dataServ.arrQMGR));
-    this.snackBar.open(qmreply, '', {
+    const acereply = window.electronIpcSendSync('updateQM', JSON.stringify(this.dataServ.arrACE));
+    this.snackBar.open(acereply, '', {
       duration: 3000,
     });
   }

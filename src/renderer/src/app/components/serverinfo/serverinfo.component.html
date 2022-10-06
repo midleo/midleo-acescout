@@ -1,0 +1,44 @@
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+  <mat-card class="midcard">
+    <mat-card-header>
+      <mat-card-title>{{dataServ.selectedACE}}</mat-card-title>
+      <mat-card-subtitle>ACE Server</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="td-container" [hidden]="this.dataServ.dataerr">
+      <div style="justify-content: flex-end;display: flex;">
+        <table cellpadding="0" cellspacing="0" style="width:100px">
+          <tr>
+            <td style="border-right: 0px!important;">
+              <button mat-button (click)="dataServ.acedata=[];getQMI()">Refresh</button>
+            </td>
+          </tr>
+        </table>
+      </div><br>
+      <mat-form-field>
+        <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Search Filter">
+      </mat-form-field>
+      <table [dataSource]="dataSource" mat-table matSort>
+        <ng-container matColumnDef="aceattr">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header class="header-align-right text-uppercase"
+            arrowPosition="before"> Server Attributes</th>
+          <td *matCellDef="let element" mat-cell class="header-align-right"> {{element.aceattr}} </td>
+        </ng-container>
+        <ng-container matColumnDef="acedata">
+          <th *matHeaderCellDef mat-header-cell class="header-align-left"> </th>
+          <td *matCellDef="let element" mat-cell class="header-align-left"> {{element.acedata}} </td>
+        </ng-container>
+        <tr *matHeaderRowDef="displayedQMColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedQMColumns;" mat-row></tr>
+      </table>
+    </mat-card-content>
+    <mat-card-content class="td-container" *ngIf="this.dataServ.dataerr"><br>
+      <div class="alert alert-danger">
+        <h4>Problem occured while establishing connecting to <b>{{dataServ.selectedACE}}</b>.
+          <hr>
+          Please check the connection parameters, if the server is available, if the REST is available or if you have
+          opened firewall to the listener port.
+        </h4>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

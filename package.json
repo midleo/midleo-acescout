@@ -1,5 +1,5 @@
 {
-  "name": "midleo-mqscout",
+  "name": "midleo-iibscout",
   "version": "3.1.0",
   "main": "./dist/main/electron-main.js",
   "scripts": {
