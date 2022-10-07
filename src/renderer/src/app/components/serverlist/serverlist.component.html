@@ -9,7 +9,7 @@
         <table cellpadding="0" cellspacing="0" style="width:100px">
           <tr>
             <td style="border-right: 0px!important;">
-              <button mat-button (click)="dataServ.acedata=[];getIIBI()">Refresh</button>
+              <button mat-button (click)="dataServ.acelist=[];getIIBL()">Refresh</button>
             </td>
           </tr>
         </table>
@@ -17,15 +17,15 @@
       <mat-form-field>
         <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Search Filter">
       </mat-form-field>
-      <table [dataSource]="dataSource" mat-table matSort>
+      <table [dataSource]="dataSourceSL" mat-table matSort>
         <ng-container matColumnDef="aceattr">
           <th *matHeaderCellDef mat-header-cell mat-sort-header class="header-align-right text-uppercase"
-            arrowPosition="before"> INT Server Attributes</th>
+            arrowPosition="before"> ACE Server Attributes</th>
           <td *matCellDef="let element" mat-cell class="header-align-right"> {{element.aceattr}} </td>
         </ng-container>
         <ng-container matColumnDef="acedata">
-          <th *matHeaderCellDef mat-header-cell class="header-align-left"> INT Server Values </th>
-          <td *matCellDef="let element" mat-cell class="header-align-left" [ngClass]="element.acecolor"> {{element.acedata}} </td>
+          <th *matHeaderCellDef mat-header-cell class="header-align-left"> ACE Server Values </th>
+          <td *matCellDef="let element" mat-cell class="header-align-left"> {{element.acedata}} </td>
         </ng-container>
         <tr *matHeaderRowDef="displayedQMColumns" mat-header-row></tr>
         <tr *matRowDef="let row; columns: displayedQMColumns;" mat-row></tr>

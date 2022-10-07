@@ -49,7 +49,7 @@ function createWindow() {
 
 ipcMain.on('updateQM', (event, arg) => {
   fs.writeFileSync(_APPHOME_ + 'acelist.json', arg.toString());
-  event.returnValue = 'Qmanagers updated successfully';
+  event.returnValue = 'ACE Servers updated successfully';
 });
 
 ipcMain.on('readQMList', () => {

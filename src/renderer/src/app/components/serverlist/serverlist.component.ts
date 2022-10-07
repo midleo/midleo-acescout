@@ -6,20 +6,20 @@ import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
-  selector: 'app-serverinfo-component',
-  templateUrl: './serverinfo.component.html',
+  selector: 'app-serverlist-component',
+  templateUrl: './serverlist.component.html',
   styleUrls: ['../main/qmcontent.css']
 })
-export class ACEServerComponent implements OnInit, OnDestroy {
+export class ACEServerListComponent implements OnInit, OnDestroy {
   navigationSubscription;
   displayedQMColumns: string[] = ['aceattr', 'acedata'];
 
-  dataSource = new MatTableDataSource();
+  dataSourceSL = new MatTableDataSource();
   constructor(public dataServ: DataService, private router: Router) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       if (e instanceof NavigationEnd) {
-        if (this.dataServ.jsonkeychanged) { this.dataServ.acedata = []; }
-        this.getIIBI();
+        if (this.dataServ.jsonkeychanged) { this.dataServ.acelist = []; }
+        this.getIIBL();
       }
     });
   }
@@ -27,22 +27,22 @@ export class ACEServerComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   ngOnInit() {
-    if (this.dataServ.jsonkeychanged) { this.dataServ.acedata = []; }
-    this.getIIBI();
+    if (this.dataServ.jsonkeychanged) { this.dataServ.acelist = []; }
+    this.getIIBL();
   }
-  getIIBI() {
+  getIIBL() {
 
   this.dataServ.selectedACE = this.dataServ.arrACEtemp.name;
   this.dataServ.selectedACEInfo = 'Info about the qmanager';
 
-  if (!this.dataServ.acedata || this.dataServ.acedata.length < 1) {
+  if (!this.dataServ.acelist || this.dataServ.acelist.length < 1) {
     this.dataServ.jsonkeychanged = false;
-    this.dataServ.acedata = [];
+    this.dataServ.acelist = [];
     const ACEinput = {
       type: 'get',
       brokerhost: this.dataServ.arrACEtemp.hostname,
       brokerport: this.dataServ.arrACEtemp.port,
-      data: 'servers'
+      data: 'serverinfo'
     };
     if(this.dataServ.arrACEtemp.auth=="basic"){
       ACEinput["brokeruser"]=this.dataServ.arrACEtemp.usrname;
@@ -69,25 +69,23 @@ export class ACEServerComponent implements OnInit, OnDestroy {
         } else {
           dataServInt.push({
             aceattr: i,
-            acedata: thisarr[i] || "",
-            acecolor: (i=="state"?(thisarr[i]=="started"?"alert-success":"alert-danger"):"")
+            acedata: thisarr[i] || ""
           });
         }
       }
       return dataServInt;
     }
 
-    this.dataServ.acedata=recArr(acereply,[]);
-
+    this.dataServ.acelist=recArr(acereply,[]);
 
   }
   
 
-  this.dataSource.data = this.dataServ.acedata;
-  this.dataSource.sort = this.sort;
+  this.dataSourceSL.data = this.dataServ.acelist;
+  this.dataSourceSL.sort = this.sort;
   }
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSourceSL.filter = filterValue.trim().toLowerCase();
   }
   ngOnDestroy() {
     if (this.navigationSubscription) {

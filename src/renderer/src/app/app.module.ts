@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent, DialogContentiibdialogComponent} from './app.component';
 import { MainContentComponent } from './components/main/main.component';
 import { ACEServerComponent } from './components/serverinfo/serverinfo.component';
+import { ACEServerListComponent } from './components/serverlist/serverlist.component';
 import { iiblistComponent, DialogDataQIDialogComponent } from './components/iibinfo/iibinfo.component';
 import { MenuListItemComponent } from './components/menu-list-item/menu-list-item.component';
 import { NavService } from './components/menu-list-item/nav.service';
@@ -26,6 +27,7 @@ import { DataService } from './common/data.service';
     DialogContentiibdialogComponent,
     DialogDataQIDialogComponent,
     ACEServerComponent,
+    ACEServerListComponent,
     iiblistComponent
   ],
   imports: [

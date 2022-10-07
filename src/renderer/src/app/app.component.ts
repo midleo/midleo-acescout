@@ -106,21 +106,14 @@ export class AppComponent implements OnInit, AfterViewInit {
     private snackBar: MatSnackBar,
     private _dialog: MatDialog,
     public overlayContainer: OverlayContainer,
- //   private httpService: HttpClient,
     private navService: NavService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher
     ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
-  //  this.mobileQuery.addListener(this.mobileQueryListener);
   }
   @HostBinding('class') componentCssClass: string;
-
- // ngOnDestroy(): void {
-  //  this.mobileQuery.removeListener(this.mobileQueryListener);
- //  }
-
   ngAfterViewInit() {
     this.navService.appDrawer = this.appDrawer;
   }

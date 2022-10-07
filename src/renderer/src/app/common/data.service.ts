@@ -11,6 +11,7 @@ export class DataService {
   loadthis = false;
   dataerr = false;
   acedata: any [];
+  acelist: any [];
 
   iiblist: any [];
   iiblistreply: [];
