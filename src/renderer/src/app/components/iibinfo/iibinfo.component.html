@@ -11,7 +11,7 @@
           <td style="border-right: 0px!important;">
             <mat-form-field>
             <mat-label>System objects</mat-label>
-            <mat-select (selectionChange)="dataServ.qlist=[];dataServ.systemobj=$event.value;getQL()">
+            <mat-select (selectionChange)="dataServ.iiblist=[];dataServ.systemobj=$event.value;getQL()">
               <mat-option value="no">No</mat-option>
               <mat-option value="yes">Yes</mat-option>
             </mat-select>
@@ -20,7 +20,7 @@
         <td style="border-right: 0px!important;">
           <mat-form-field>
             <mat-label>Empty objects</mat-label>
-            <mat-select (selectionChange)="dataServ.qlist=[];dataServ.emptyobj=$event.value;getQL()">
+            <mat-select (selectionChange)="dataServ.iiblist=[];dataServ.emptyobj=$event.value;getQL()">
               <mat-option value="no">No</mat-option>
               <mat-option value="yes">Yes</mat-option>
             </mat-select>
@@ -30,7 +30,7 @@
           <button mat-button (click)="ExportTOExcel()">Export</button>
         </td>
         <td style="border-right: 0px!important;">
-          <button mat-button (click)="dataServ.qlist=[];getQL()">Refresh</button>
+          <button mat-button (click)="dataServ.iiblist=[];getQL()">Refresh</button>
         </td>
         </tr>
       </table>

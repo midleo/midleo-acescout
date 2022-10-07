@@ -11,11 +11,11 @@ import { DataService } from './common/data.service';
 import * as CryptoJS from 'crypto-js';
 
 @Component({
-  selector: 'app-qmdialog-dialog',
-  templateUrl: './components/qmdialog/qmdialog-dialog.html',
-  styleUrls: ['./components/qmdialog/qmdialog-dialog.css']
+  selector: 'app-iibdialog-dialog',
+  templateUrl: './components/iibdialog/iibdialog-dialog.html',
+  styleUrls: ['./components/iibdialog/iibdialog-dialog.css']
 })
-export class DialogContentQMDialogComponent implements OnInit {
+export class DialogContentiibdialogComponent implements OnInit {
   aceForm: FormGroup;
   objectKeys = Object.keys;
 
@@ -135,8 +135,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.overlayContainer.getContainerElement().classList.add(theme);
     this.componentCssClass = theme;
   }
-  openQMDialog() {
-    const dialogRef = this._dialog.open(DialogContentQMDialogComponent, { minWidth: 300 });
+  openiibdialog() {
+    const dialogRef = this._dialog.open(DialogContentiibdialogComponent, { minWidth: 300 });
   }
   encryptThis(thistext: string) {
     return CryptoJS.AES.encrypt(thistext, this.encryptSecretKey).toString();

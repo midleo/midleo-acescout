@@ -13,15 +13,15 @@ import * as XLSX from 'xlsx';
 })
 export class DialogDataQIDialogComponent {
   constructor(public dataServ: DataService) {}
-  QIdata = this.dataServ.qlistreply[this.dataServ.qiid];
+  QIdata = this.dataServ.iiblistreply[this.dataServ.qiid];
 }
 
 @Component({
-  selector: 'app-queuelist-component',
-  templateUrl: './queuelist.component.html',
+  selector: 'app-iibinfo-component',
+  templateUrl: './iibinfo.component.html',
   styleUrls: ['../main/qmcontent.css']
 })
-export class QListComponent implements OnInit, OnDestroy {
+export class iiblistComponent implements OnInit, OnDestroy {
   navigationSubscription;
   displayedQLColumns: string[] = [
     'name',
@@ -40,7 +40,7 @@ export class QListComponent implements OnInit, OnDestroy {
   constructor(public dataServ: DataService, public dialog: MatDialog, private router: Router) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       if (e instanceof NavigationEnd) {
-        if (this.dataServ.jsonkeychanged) { this.dataServ.qlist = []; }
+        if (this.dataServ.jsonkeychanged) { this.dataServ.iiblist = []; }
         this.getQL();
       }
     });
@@ -50,7 +50,7 @@ export class QListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   ngOnInit() {
-    if (this.dataServ.jsonkeychanged) { this.dataServ.qlist = []; }
+    if (this.dataServ.jsonkeychanged) { this.dataServ.iiblist = []; }
     this.getQL();
   }
   getQL() {
@@ -59,10 +59,10 @@ export class QListComponent implements OnInit, OnDestroy {
 //  this.dataServ.systemobj = thissysobj;
 //  this.dataServ.emptyobj = thisemptyobj;
 
-  if (!this.dataServ.qlist || this.dataServ.qlist.length < 1) {
+  if (!this.dataServ.iiblist || this.dataServ.iiblist.length < 1) {
     this.dataServ.jsonkeychanged = false;
-    this.dataServ.qlist = [];
-    this.dataServ.qlistreply = [];
+    this.dataServ.iiblist = [];
+    this.dataServ.iiblistreply = [];
   //  this.dataServ.systemobj = thissysobj;
   //  this.dataServ.emptyobj = thisemptyobj;
     const ACEinput = {
@@ -87,9 +87,9 @@ export class QListComponent implements OnInit, OnDestroy {
       this.dataServ.dataerr = true;
     }
     if (acereply.queues) {
-    this.dataServ.qlistreply = acereply.queues;
+    this.dataServ.iiblistreply = acereply.queues;
     for ( const [key, value] of Object.entries( acereply.queues ) ) {
-      this.dataServ.qlist.push({
+      this.dataServ.iiblist.push({
          objkey: key,
          name: value['QUEUE'],
          type: value['TYPE'],
@@ -106,9 +106,9 @@ export class QListComponent implements OnInit, OnDestroy {
          defpsist: value['DEFPSIST']
       });
      }
-    } else { this.dataServ.qlist = []; }
+    } else { this.dataServ.iiblist = []; }
    }
-  this.dataSourceQL.data = this.dataServ.qlist;
+  this.dataSourceQL.data = this.dataServ.iiblist;
   this.dataSourceQL.sort = this.QLSort;
   this.dataSourceQL.paginator = this.paginator;
   }
@@ -120,9 +120,9 @@ export class QListComponent implements OnInit, OnDestroy {
     this.dialog.open(DialogDataQIDialogComponent, { minWidth: 400 });
   }
   ExportTOExcel() {
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataServ.qlist);
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataServ.iiblist);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'QUEUELIST');
+    XLSX.utils.book_append_sheet(wb, ws, 'iibinfo');
     XLSX.writeFile(wb, this.dataServ.arrACEtemp.name + '_queues.xlsx');
   }
   ngOnDestroy() {

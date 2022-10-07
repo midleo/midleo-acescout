@@ -12,8 +12,8 @@ export class DataService {
   dataerr = false;
   acedata: any [];
 
-  qlist: any [];
-  qlistreply: [];
+  iiblist: any [];
+  iiblistreply: [];
 
   chlist: any [];
 //  chlistreply: [];

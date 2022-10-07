@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainContentComponent } from './components/main/main.component';
 import { ACEServerComponent } from './components/serverinfo/serverinfo.component';
-import { QListComponent } from './components/queuelist/queuelist.component';
+import { iiblistComponent } from './components/iibinfo/iibinfo.component';
 
 const routes: Routes = [
   {
@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path:  'showINTServer/:id',
-    component:  QListComponent,
+    component:  iiblistComponent,
     runGuardsAndResolvers: 'always'
   }
 //  { path: '404', component: NotfoundComponent },

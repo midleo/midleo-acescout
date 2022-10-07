@@ -9,10 +9,10 @@ import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent, DialogContentQMDialogComponent} from './app.component';
+import { AppComponent, DialogContentiibdialogComponent} from './app.component';
 import { MainContentComponent } from './components/main/main.component';
 import { ACEServerComponent } from './components/serverinfo/serverinfo.component';
-import { QListComponent, DialogDataQIDialogComponent } from './components/queuelist/queuelist.component';
+import { iiblistComponent, DialogDataQIDialogComponent } from './components/iibinfo/iibinfo.component';
 import { MenuListItemComponent } from './components/menu-list-item/menu-list-item.component';
 import { NavService } from './components/menu-list-item/nav.service';
 import { DataService } from './common/data.service';
@@ -23,10 +23,10 @@ import { DataService } from './common/data.service';
     AppComponent,
     MainContentComponent,
     MenuListItemComponent,
-    DialogContentQMDialogComponent,
+    DialogContentiibdialogComponent,
     DialogDataQIDialogComponent,
     ACEServerComponent,
-    QListComponent
+    iiblistComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +43,7 @@ import { DataService } from './common/data.service';
     MatDialogModule
   ],
   providers: [NavService, DataService],
-  entryComponents: [ DialogContentQMDialogComponent, DialogDataQIDialogComponent],
+  entryComponents: [ DialogContentiibdialogComponent, DialogDataQIDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
