@@ -42,7 +42,7 @@ export class ACEServerListComponent implements OnInit, OnDestroy {
       type: 'get',
       brokerhost: this.dataServ.arrACEtemp.hostname,
       brokerport: this.dataServ.arrACEtemp.port,
-      data: 'serverinfo'
+      data: '.apiv2'
     };
     if(this.dataServ.arrACEtemp.auth=="basic"){
       ACEinput["brokeruser"]=this.dataServ.arrACEtemp.usrname;
@@ -54,6 +54,7 @@ export class ACEServerListComponent implements OnInit, OnDestroy {
       ACEinput["sslcipher"]=this.dataServ.arrACEtemp.sslcipher
     }
     let acereply: any;
+
     try {
       acereply = JSON.parse(window.electronIpcSendSync('execPCFQD', JSON.stringify(ACEinput)));
       this.dataServ.dataerr = false;
@@ -62,10 +63,10 @@ export class ACEServerListComponent implements OnInit, OnDestroy {
       this.dataServ.dataerr = true;
     }
 
-    function recArr(thisarr: any, dataServInt: any) {
+    function recursiveArr(thisarr: any, dataServInt: any) {
       for (const i in thisarr) {
         if(typeof thisarr[i] === "object") {
-         recArr(thisarr[i],dataServInt);
+          recursiveArr(thisarr[i],dataServInt);
         } else {
           dataServInt.push({
             aceattr: i,
@@ -76,7 +77,13 @@ export class ACEServerListComponent implements OnInit, OnDestroy {
       return dataServInt;
     }
 
-    this.dataServ.acelist=recArr(acereply,[]);
+   // this.dataServ.acelist=recursiveArr(acereply,[]);
+   for (const i in acereply) {
+    this.dataServ.acelist.push({
+      aceattr: i,
+      acedata: acereply[i] || ""
+    });
+   }
 
   }
   

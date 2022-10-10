@@ -42,7 +42,7 @@ export class ACEServerComponent implements OnInit, OnDestroy {
       type: 'get',
       brokerhost: this.dataServ.arrACEtemp.hostname,
       brokerport: this.dataServ.arrACEtemp.port,
-      data: 'servers'
+      data: '.apiv2.servers'
     };
     if(this.dataServ.arrACEtemp.auth=="basic"){
       ACEinput["brokeruser"]=this.dataServ.arrACEtemp.usrname;
@@ -62,27 +62,16 @@ export class ACEServerComponent implements OnInit, OnDestroy {
       this.dataServ.dataerr = true;
     }
 
-    function recArr(thisarr: any, dataServInt: any) {
-      for (const i in thisarr) {
-        if(typeof thisarr[i] === "object") {
-         recArr(thisarr[i],dataServInt);
-        } else {
-          dataServInt.push({
-            aceattr: i,
-            acedata: thisarr[i] || "",
-            acecolor: (i=="state"?(thisarr[i]=="started"?"alert-success":"alert-danger"):"")
-          });
-        }
-      }
-      return dataServInt;
+    for (const i in acereply) {
+     this.dataServ.acedata.push({
+      aceattr: i,
+      acedata: acereply[i] || "",
+      acecolor: (i=="active.state"?(acereply[i]=="started"?"alert-success":"alert-danger"):"")
+     });
     }
-
-    this.dataServ.acedata=recArr(acereply,[]);
-
 
   }
   
-
   this.dataSource.data = this.dataServ.acedata;
   this.dataSource.sort = this.sort;
   }
