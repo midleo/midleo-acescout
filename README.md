@@ -1,6 +1,6 @@
 # Midleo ACEScout
 
-Source code for ACEScout - Explorer for IBM Mq server
+Source code for ACEScout - Explorer for IBM ACE server
 
 
 ## Getting started
