@@ -1,14 +1,14 @@
-# Midleo IIBScout
+# Midleo ACEScout
 
-Source code for IIBScout - Explorer for IBM Mq server
+Source code for ACEScout - Explorer for IBM Mq server
 
 
 ## Getting started
 
 
 ```bash
-$ git clone https://github.com/midleo/midleo-iibscout.git
-$ cd midleo-iibscout
+$ git clone https://github.com/midleo/midleo-acescout.git
+$ cd midleo-acescout
 $ npm install
 $ npm run build:dev:all
 $ npm start
@@ -16,10 +16,10 @@ $ npm start
 
 ## Take a look
 
-Some screenshots from the Midleo IIBScout:
+Some screenshots from the Midleo ACEScout:
 
-### New qmmanager definition
-![The Midleo iibscout app](https://github.com/midleo/midleo-iibscout/blob/master/github.assets/iibscout.jpg?raw=true)
+### New App Connect server definition
+![The Midleo acescout app](https://github.com/midleo/midleo-acescout/blob/master/github.assets/acescout.jpg?raw=true)
 
 
 ## NPM scripts
