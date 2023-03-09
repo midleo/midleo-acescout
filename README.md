@@ -50,16 +50,6 @@ Start watching for source code changes, and builds after each source code change
 | `npm run build:watch:renderer` | Watch the *Electron renderer* project |
 | `npm run build:watch:preload` | Watch the *Electron preload* project |
 
-### Tests
-
-Test commands.
-
-| Command | Description |
-| --- | --- |
-| `npm run test:test` | Executes all Angular unit-tests |
-| `npm run test:e2e` | Executes Angular end-2-end tests |
-| `npm run test:lint` | Angular lint |
-
 ### Updates
 
 Commands for updating NPM modules.
