@@ -45,7 +45,7 @@ import { DataService } from './common/data.service';
     MatDialogModule
   ],
   providers: [NavService, DataService],
-  entryComponents: [ DialogContentiibdialogComponent, DialogDataQIDialogComponent],
+//  entryComponents: [ DialogContentiibdialogComponent, DialogDataQIDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
