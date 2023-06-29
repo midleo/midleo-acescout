@@ -7,6 +7,7 @@ Source code for ACEScout - Explorer for IBM ACE server
 
 
 ```bash
+$ Download latest midleoace.jar from https://gitlab.com/vasilev.link/public/-/tree/master/java/midleo_ace to YOUR_HOME_FOLDER/.midleo
 $ git clone https://github.com/midleo/midleo-acescout.git
 $ cd midleo-acescout
 $ npm install
