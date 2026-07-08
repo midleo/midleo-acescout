@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { MainContentComponent } from './components/main/main.component';
 import { ACEServerComponent } from './components/serverinfo/serverinfo.component';
 import { ACEServerListComponent } from './components/serverlist/serverlist.component';
-import { iiblistComponent } from './components/iibinfo/iibinfo.component';
 
 const routes: Routes = [
   {
@@ -18,11 +17,6 @@ const routes: Routes = [
   {
     path:  'showINTServer/:id',
     component:  ACEServerComponent,
-    runGuardsAndResolvers: 'always'
-  },
-  {
-    path:  'showINTInfo/:id',
-    component:  iiblistComponent,
     runGuardsAndResolvers: 'always'
   }
 //  { path: '404', component: NotfoundComponent },

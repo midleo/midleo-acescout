@@ -1,43 +1,54 @@
-<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
-  <mat-card appearance="outlined" class="midcard">
+<div class="page-container">
+  <mat-card appearance="outlined" class="content-card">
     <mat-card-header>
-      <mat-card-title>{{dataServ.arrACEtemp.name}} ({{dataServ.arrACEtemp.port}})</mat-card-title>
-      <mat-card-subtitle>ACE Server</mat-card-subtitle>
+      <mat-card-title>{{ dataServ.arrACEtemp.name }} ({{ dataServ.arrACEtemp.port }})</mat-card-title>
+      <mat-card-subtitle>Integration servers</mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content class="td-container" [hidden]="this.dataServ.dataerr">
-      <div style="justify-content: flex-end;display: flex;">
-        <table cellpadding="0" cellspacing="0" style="width:100px">
-          <tr>
-            <td style="border-right: 0px!important;">
-              <button mat-button (click)="dataServ.acedata=[];getIIBI()">Refresh</button>
-            </td>
-          </tr>
-        </table>
-      </div><br>
-      <mat-form-field>
-        <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Search Filter">
+
+    <mat-card-content class="td-container" [hidden]="dataServ.dataerr">
+      <div class="data-toolbar">
+        <div class="data-toolbar-actions">
+          <button mat-stroked-button (click)="dataServ.acedata=[]; getIIBI()">
+            <mat-icon>refresh</mat-icon> Refresh
+          </button>
+        </div>
+      </div>
+
+      <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+        <mat-label>Search attributes</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter by name…" />
       </mat-form-field>
-      <table [dataSource]="dataSource" mat-table matSort>
-        <ng-container matColumnDef="aceattr">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header class="header-align-right text-uppercase"
-            arrowPosition="before"> INT Server Attributes</th>
-          <td *matCellDef="let element" mat-cell class="header-align-right">{{element.aceattr}}</td>
-        </ng-container>
-        <ng-container matColumnDef="acedata">
-          <th *matHeaderCellDef mat-header-cell class="header-align-left"> INT Server Values </th>
-          <td *matCellDef="let element" mat-cell class="header-align-left" [ngClass]="element.acecolor">{{element.acedata}}</td>
-        </ng-container>
-        <tr *matHeaderRowDef="displayedQMColumns" mat-header-row></tr>
-        <tr *matRowDef="let row; columns: displayedQMColumns;" mat-row></tr>
-      </table>
+
+      <div class="table-scroll" *ngIf="dataServ.acedata?.length; else emptyIntServer">
+        <table [dataSource]="dataSource" mat-table matSort class="data-table">
+          <ng-container matColumnDef="aceattr">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header class="header-align-right text-uppercase"
+              arrowPosition="before">Attribute</th>
+            <td *matCellDef="let element" mat-cell class="header-align-right">{{ element.aceattr }}</td>
+          </ng-container>
+          <ng-container matColumnDef="acedata">
+            <th *matHeaderCellDef mat-header-cell class="header-align-left">Value</th>
+            <td *matCellDef="let element" mat-cell class="header-align-left" [ngClass]="element.acecolor">{{ element.acedata }}</td>
+          </ng-container>
+          <tr *matHeaderRowDef="displayedQMColumns" mat-header-row></tr>
+          <tr *matRowDef="let row; columns: displayedQMColumns;" mat-row></tr>
+        </table>
+      </div>
+
+      <ng-template #emptyIntServer>
+        <div class="state-panel" *ngIf="!dataServ.loadthis">
+          <mat-icon>hub</mat-icon>
+          <p>No integration server attributes were returned.</p>
+        </div>
+      </ng-template>
     </mat-card-content>
-    <mat-card-content class="td-container" *ngIf="this.dataServ.dataerr"><br>
+
+    <mat-card-content class="td-container" *ngIf="dataServ.dataerr">
       <div class="alert alert-danger">
-        <h4>Problem occured while establishing connecting to <b>{{dataServ.selectedACE}}</b>.
-          <hr>
-          Please check the connection parameters, if the server is available, if the REST is available or if you have
-          opened firewall to the listener port.
-        </h4>
+        <h4>Connection failed</h4>
+        <p>Could not connect to <strong>{{ dataServ.selectedACE }}</strong>.</p>
+        <p>Check hostname, port, authentication, SSL settings, and that the REST API is reachable.</p>
       </div>
     </mat-card-content>
   </mat-card>
