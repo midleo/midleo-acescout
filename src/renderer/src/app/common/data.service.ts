@@ -14,7 +14,7 @@ export class DataService {
   acelist: any [];
 
   iiblist: any [];
-  iiblistreply: [];
+  iiblistreply: Record<string, Record<string, string>> | [];
 
   chlist: any [];
 //  chlistreply: [];

@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Add new Integration Server</h2>
+<h2 mat-dialog-title>Add ACE integration node</h2>
 <mat-dialog-content class="mat-typography middialog" [formGroup]="aceForm">
 
      <mat-form-field>
@@ -26,7 +26,7 @@
           <input matInput class="form-control" placeholder="User name" formControlName="usrname" name='usrname'>
      </mat-form-field>
      <mat-form-field *ngIf="auth.value == 'basic'">
-          <input matInput class="form-control" placeholder="Password" formControlName="usrpass" name='usrpass'>
+          <input matInput class="form-control" placeholder="Password" formControlName="usrpass" name='usrpass' type="password">
      </mat-form-field>
      <mat-form-field>
           <mat-select matInput class="form-control" placeholder="SSL" formControlName="ssl" #ssl name='ssl'>
@@ -39,7 +39,7 @@
           <mat-hint align="end">c:\key.jks</mat-hint>
      </mat-form-field>
      <mat-form-field *ngIf="ssl.value == 'yes'">
-          <input matInput class="form-control" placeholder="SSL Key password" formControlName="sslpass" name='sslpass'>
+          <input matInput class="form-control" placeholder="SSL Key password" formControlName="sslpass" name='sslpass' type="password">
           <mat-hint align="end">123456</mat-hint>
      </mat-form-field>
      <mat-form-field *ngIf="ssl.value == 'yes'">
@@ -50,6 +50,9 @@
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-     <button mat-button mat-dialog-close>Cancel</button>
-     <button mat-raised-button color="primary" [disabled]="!aceForm.valid" (click)="createQM()">Add</button>
+     <button mat-button mat-dialog-close [disabled]="isSaving">Cancel</button>
+     <button mat-flat-button color="primary" [disabled]="!aceForm.valid || isSaving" (click)="createQM()">
+       <mat-spinner *ngIf="isSaving" diameter="18"></mat-spinner>
+       <span *ngIf="!isSaving">Add</span>
+     </button>
 </mat-dialog-actions>
