@@ -1,15 +1,14 @@
 import { app, BrowserWindow, nativeImage, shell } from 'electron';
 import { execFile } from 'node:child_process';
 import { promises as fs } from 'node:fs';
-import { homedir } from 'node:os';
 import { join } from 'node:path';
 import { promisify } from 'node:util';
 import { registerIpcHandlers } from './ipc-handlers';
+import { getAppHome, resolveJavaRuntime } from './jar-path';
 
 const execFileAsync = promisify(execFile);
-const APP_HOME = join(homedir(), '.midleo');
+const APP_HOME = getAppHome();
 const ACE_LIST_PATH = join(APP_HOME, 'acelist.json');
-const JAR_PATH = join(APP_HOME, 'midleoace.jar');
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -80,10 +79,11 @@ function createWindow(): void {
 app.whenReady().then(async () => {
   applyAppIcon();
   await ensureAppHome();
+  const javaRuntime = await resolveJavaRuntime();
   registerIpcHandlers({
     appHome: APP_HOME,
     aceListPath: ACE_LIST_PATH,
-    jarPath: JAR_PATH,
+    javaRuntime,
     execFileAsync,
   });
   createWindow();

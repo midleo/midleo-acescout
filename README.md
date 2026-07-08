@@ -5,11 +5,30 @@ Enterprise desktop explorer for IBM App Connect Enterprise integration nodes. Bu
 ## Prerequisites
 
 - Node.js 22+
-- Java runtime (for `midleoace.jar`)
+- Java 21+ runtime
+- Licensed Java artifacts in `~/.midleo/` (see below)
 
-## Getting started
+## Licensed Java files
 
-1. Download the latest `midleoace.jar` from [GitLab](https://gitlab.com/vasilev.link/public/-/tree/master/java/midleo_ace) into `~/.midleo/`.
+ACEScout requires proprietary JAR that is **not** included in the open-source repository or installer. Contact [vasilev.link](https://vasilev.link) for licensed distribution.
+
+Place the following under `~/.midleo/` (same folder as `acelist.json`):
+
+```
+~/.midleo/
+  acelist.json
+  midleoace.jar
+  midleolibs/
+    libs/                 # gson, json-*, etc.
+    vendor/
+      IntegrationAPI_ACE.jar
+```
+
+The `resources/` folder in this repo shows the expected layout as documentation only — files there are **not** bundled into the app.
+
+## Getting started (development)
+
+1. Obtain `midleoace.jar` and populate `~/.midleo/midleolibs/` (see [resources/README.md](resources/README.md) for structure).
 2. Install dependencies and build:
 
 ```bash
@@ -17,8 +36,6 @@ npm install
 npm run build:dev:all
 npm start
 ```
-
-## Production release
 
 ```bash
 npm run release        # package for current OS
@@ -67,4 +84,8 @@ Dependency install scripts are gated by the `allowScripts` field in `package.jso
 
 ### Connection errors
 
-Ensure `midleoace.jar` is present at `~/.midleo/midleoace.jar` and the integration node's REST API is reachable on the configured port.
+Ensure `~/.midleo/midleoace.jar` exists. You can obtain `midleoace.jar` from [vasilev.link](https://vasilev.link).
+
+Vendor libraries, including `~/.midleo/midleolibs/vendor/IntegrationAPI_ACE.jar`, must be provided by the client from their own licensed IBM App Connect Enterprise installation or licensed software distribution.
+
+Verify the integration node's REST API is reachable on the configured port.
